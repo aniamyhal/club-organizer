@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
-import '../../core/widgets/app_shell.dart';
+import '../../core/widgets/page_body.dart';
 import '../../core/widgets/section_card.dart';
 import '../../core/widgets/status_badge.dart';
 
@@ -9,9 +9,20 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   static const _meetings = <_MeetingData>[
-    _MeetingData('03', 'ЖОВ', 'Кольори та ангоби', '17:00–18:30', 'Майстерня 2'),
-    _MeetingData('08', 'ЖОВ', 'Створюємо власну чашку', '16:30–18:00', 'Майстерня 1'),
-    _MeetingData('15', 'ЖОВ', 'Глазурування виробів', '16:30–18:00', 'Майстерня 2'),
+    _MeetingData(
+      '03',
+      'ЖОВ',
+      'Кольори та ангоби',
+      '17:00–18:30',
+      'Майстерня 2',
+    ),
+    _MeetingData(
+      '08',
+      'ЖОВ',
+      'Створюємо власну чашку',
+      '16:30–18:00',
+      'Майстерня 1',
+    ),
   ];
 
   static const _tasks = <_TaskData>[
@@ -22,10 +33,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppShell(
-      title: 'Вітаємо, Анно!',
-      subtitle: 'Четвер, 1 жовтня 2026',
-      activeRoute: '/home',
+    return PageBody(
       child: LayoutBuilder(
         builder: (context, constraints) {
           final narrow = constraints.maxWidth < 800;
@@ -34,8 +42,9 @@ class HomeScreen extends StatelessWidget {
             children: [
               if (narrow)
                 const Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _NextMeetingCard(),
+                    SizedBox(width: double.infinity, child: _NextMeetingCard()),
                     SizedBox(height: 16),
                     _MetricCards(),
                   ],
@@ -44,16 +53,17 @@ class HomeScreen extends StatelessWidget {
                 const Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(flex: 3, child: _NextMeetingCard()),
+                    Expanded(flex: 7, child: _NextMeetingCard()),
                     SizedBox(width: 16),
-                    Expanded(flex: 1, child: _MetricCards()),
+                    Expanded(flex: 2, child: _MetricCards()),
                   ],
                 ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               const _QuickActions(),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               if (narrow)
                 const Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _MeetingList(meetings: _meetings),
                     SizedBox(height: 20),
@@ -83,25 +93,45 @@ class _NextMeetingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(color: AppColors.primaryContainer, borderRadius: BorderRadius.circular(16)),
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppColors.primaryContainer,
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('НАЙБЛИЖЧА ЗУСТРІЧ', style: TextStyle(fontSize: 12, letterSpacing: 1, fontWeight: FontWeight.w700, color: AppColors.primary)),
-          const SizedBox(height: 18),
-          const Text('Основи ліплення з глини', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
-          const SizedBox(height: 8),
-          const Text('Сьогодні, 16:30–18:00', style: TextStyle(fontWeight: FontWeight.w600)),
-          const SizedBox(height: 4),
+          const Text(
+            'НАЙБЛИЖЧА ЗУСТРІЧ',
+            style: TextStyle(
+              fontSize: 12,
+              letterSpacing: 1,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primary,
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Основи ліплення з глини',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            'Сьогодні, 16:30–18:00',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 3),
           const Text('Майстерня 2', style: TextStyle(color: AppColors.muted)),
-          const SizedBox(height: 20),
+          const SizedBox(height: 14),
           Wrap(
             spacing: 12,
             runSpacing: 8,
             children: [
               FilledButton(onPressed: () {}, child: const Text('Відкрити')),
-              OutlinedButton(onPressed: () {}, child: const Text('Учасники (8)')),
+              OutlinedButton(
+                onPressed: () {},
+                child: const Text('Учасники (8)'),
+              ),
             ],
           ),
         ],
@@ -116,17 +146,30 @@ class _MetricCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _MetricCard(number: '12', label: 'Учасників гуртка', icon: Icons.people_outline),
+        _MetricCard(
+          number: '12',
+          label: 'Учасників гуртка',
+          icon: Icons.people_outline,
+        ),
         SizedBox(height: 16),
-        _MetricCard(number: '5', label: 'Відкритих завдань', icon: Icons.task_alt_outlined),
+        _MetricCard(
+          number: '3',
+          label: 'Відкритих завдань',
+          icon: Icons.task_alt_outlined,
+        ),
       ],
     );
   }
 }
 
 class _MetricCard extends StatelessWidget {
-  const _MetricCard({required this.number, required this.label, required this.icon});
+  const _MetricCard({
+    required this.number,
+    required this.label,
+    required this.icon,
+  });
 
   final String number;
   final String label;
@@ -151,8 +194,17 @@ class _MetricCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(number, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
-                Text(label, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+                Text(
+                  number,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  label,
+                  style: const TextStyle(color: AppColors.muted, fontSize: 12),
+                ),
               ],
             ),
           ),
@@ -211,7 +263,10 @@ class _MeetingList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SectionCard(
       title: 'Найближчі зустрічі',
-      trailing: const Text('4 заплановано', style: TextStyle(color: AppColors.muted, fontSize: 12)),
+      trailing: const Text(
+        '2 заплановано',
+        style: TextStyle(color: AppColors.muted, fontSize: 12),
+      ),
       child: Column(
         children: meetings
             .map(
@@ -222,11 +277,28 @@ class _MeetingList extends StatelessWidget {
                     Container(
                       width: 52,
                       padding: const EdgeInsets.symmetric(vertical: 8),
-                      decoration: BoxDecoration(color: AppColors.primaryContainer, borderRadius: BorderRadius.circular(8)),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryContainer,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       child: Column(
                         children: [
-                          Text(meeting.day, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.primary)),
-                          Text(meeting.month, style: const TextStyle(fontSize: 10, color: AppColors.primary, fontWeight: FontWeight.w700)),
+                          Text(
+                            meeting.day,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          Text(
+                            meeting.month,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -235,9 +307,18 @@ class _MeetingList extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(meeting.title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                          Text(
+                            meeting.title,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
                           const SizedBox(height: 4),
-                          Text('${meeting.time} · ${meeting.place}', style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+                          Text(
+                            '${meeting.time} · ${meeting.place}',
+                            style: const TextStyle(
+                              color: AppColors.muted,
+                              fontSize: 12,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -265,7 +346,10 @@ class _TaskList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SectionCard(
       title: 'Завдання',
-      trailing: const Text('3 відкриті', style: TextStyle(color: AppColors.muted, fontSize: 12)),
+      trailing: const Text(
+        '3 відкриті',
+        style: TextStyle(color: AppColors.muted, fontSize: 12),
+      ),
       child: Column(
         children: tasks
             .map(
@@ -274,7 +358,12 @@ class _TaskList extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: Text(task.title, style: const TextStyle(fontWeight: FontWeight.w500))),
+                    Expanded(
+                      child: Text(
+                        task.title,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                    ),
                     const SizedBox(width: 8),
                     StatusBadge(label: task.status),
                   ],

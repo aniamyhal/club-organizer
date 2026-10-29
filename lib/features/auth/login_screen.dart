@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/app_text_field.dart';
@@ -17,28 +18,31 @@ class LoginScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const AuthHeading(title: 'Вхід', subtitle: 'Органайзер навчального гуртка'),
+          const AuthHeading(
+            title: 'Вхід',
+            subtitle: 'Органайзер навчального гуртка',
+          ),
           const SizedBox(height: 28),
-          const AppTextField(label: 'Електронна пошта', keyboardType: TextInputType.emailAddress),
+          const AppTextField(
+            label: 'Електронна пошта',
+            keyboardType: TextInputType.emailAddress,
+          ),
           const SizedBox(height: 16),
           const AppTextField(label: 'Пароль', isPassword: true),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: () => Navigator.pushNamed(context, '/forgot-password'),
+              onPressed: () => context.push('/forgot-password'),
               child: const Text('Забули пароль?'),
             ),
           ),
-          PrimaryButton(
-            label: 'Увійти',
-            onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
-          ),
+          PrimaryButton(label: 'Увійти', onPressed: () => context.go('/home')),
           const SizedBox(height: 24),
           const _DividerLabel(label: 'Немає облікового запису?'),
           const SizedBox(height: 16),
           SecondaryButton(
             label: 'Зареєструватися',
-            onPressed: () => Navigator.pushNamed(context, '/register'),
+            onPressed: () => context.push('/register'),
           ),
         ],
       ),

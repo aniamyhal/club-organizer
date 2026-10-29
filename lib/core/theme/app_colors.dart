@@ -11,6 +11,6 @@ class AppColors {
   static const Color newBadge = Color(0xFFFFE7B8);
   static const Color progressBadge = Color(0xFFFFDAD2);
   static const Color doneBadge = Color(0xFFD9EBD8);
-  static const Color danger = Color(0xFFAA493E);
+  static const Color danger = Color(0xFFBA1A1A);
   static const Color border = Color(0xFFE9DDD8);
 }

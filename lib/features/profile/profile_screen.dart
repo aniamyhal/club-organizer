@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_colors.dart';
-import '../../core/widgets/app_shell.dart';
 import '../../core/widgets/app_text_field.dart';
+import '../../core/widgets/page_body.dart';
 import '../../core/widgets/section_card.dart';
 import 'change_password_dialog.dart';
 
@@ -11,10 +12,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppShell(
-      title: 'Профіль',
-      subtitle: 'Керуйте особистими даними та налаштуваннями безпеки',
-      activeRoute: '/profile',
+    return PageBody(
       child: LayoutBuilder(
         builder: (context, constraints) {
           final narrow = constraints.maxWidth < 900;
@@ -55,25 +53,50 @@ class _ProfileCard extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               const CircleAvatar(
-                radius: 48,
+                radius: 52,
                 backgroundColor: AppColors.primaryContainer,
-                child: Text('АМ', style: TextStyle(fontSize: 24, color: AppColors.primary, fontWeight: FontWeight.w700)),
+                child: Text(
+                  'АМ',
+                  style: TextStyle(
+                    fontSize: 32,
+                    color: Color(0xFF3B0A00),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
               Positioned(
-                right: -2,
+                right: 0,
                 bottom: 0,
                 child: Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: const BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
-                  child: const Icon(Icons.camera_alt_outlined, size: 18, color: AppColors.primary),
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 3),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.photo_camera_outlined,
+                      size: 18,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          const Text('Анна Мигаль', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+          const Text(
+            'Анна Мигаль',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          ),
           const SizedBox(height: 6),
-          const Text('anna.myhal@gmail.com', textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
+          const Text(
+            'anna.myhal@gmail.com',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: AppColors.muted),
+          ),
           const SizedBox(height: 14),
           const _RoleBadge(),
           const SizedBox(height: 24),
@@ -85,7 +108,10 @@ class _ProfileCard extends StatelessWidget {
           TextButton(
             onPressed: () {},
             style: TextButton.styleFrom(foregroundColor: AppColors.danger),
-            child: const Text('Видалити фото'),
+            child: const Text(
+              'Видалити фото',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+            ),
           ),
         ],
       ),
@@ -100,8 +126,18 @@ class _RoleBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(color: AppColors.primaryContainer, borderRadius: BorderRadius.circular(24)),
-      child: const Text('Керівник гуртка', style: TextStyle(color: AppColors.primary, fontSize: 12, fontWeight: FontWeight.w600)),
+      decoration: BoxDecoration(
+        color: AppColors.primaryContainer,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: const Text(
+        'Керівник гуртка',
+        style: TextStyle(
+          color: AppColors.primary,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
     );
   }
 }
@@ -119,25 +155,62 @@ class _ProfileDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Оновіть контактну інформацію профілю', style: TextStyle(color: AppColors.muted)),
+              const Text(
+                'Оновіть контактну інформацію профілю',
+                style: TextStyle(color: AppColors.muted),
+              ),
               const SizedBox(height: 20),
               LayoutBuilder(
                 builder: (context, constraints) {
                   final narrow = constraints.maxWidth < 520;
-                  final firstName = const AppTextField(label: "Ім'я", initialValue: 'Анна');
-                  final lastName = const AppTextField(label: 'Прізвище', initialValue: 'Мигаль');
-                  final email = const AppTextField(label: 'Email', initialValue: 'anna.myhal@gmail.com', keyboardType: TextInputType.emailAddress);
-                  final phone = const AppTextField(label: 'Телефон', initialValue: '+380 67 456 78 90', keyboardType: TextInputType.phone);
+                  final firstName = const AppTextField(
+                    label: "Ім'я",
+                    initialValue: 'Анна',
+                  );
+                  final lastName = const AppTextField(
+                    label: 'Прізвище',
+                    initialValue: 'Мигаль',
+                  );
+                  final email = const AppTextField(
+                    label: 'Email',
+                    initialValue: 'anna.myhal@gmail.com',
+                    keyboardType: TextInputType.emailAddress,
+                  );
+                  final phone = const AppTextField(
+                    label: 'Телефон',
+                    initialValue: '+380 67 456 78 90',
+                    keyboardType: TextInputType.phone,
+                  );
                   if (narrow) {
                     return Column(
-                      children: [firstName, const SizedBox(height: 16), lastName, const SizedBox(height: 16), email, const SizedBox(height: 16), phone],
+                      children: [
+                        firstName,
+                        const SizedBox(height: 16),
+                        lastName,
+                        const SizedBox(height: 16),
+                        email,
+                        const SizedBox(height: 16),
+                        phone,
+                      ],
                     );
                   }
                   return Column(
                     children: [
-                      Row(children: [Expanded(child: firstName), const SizedBox(width: 16), Expanded(child: lastName)]),
+                      Row(
+                        children: [
+                          Expanded(child: firstName),
+                          const SizedBox(width: 16),
+                          Expanded(child: lastName),
+                        ],
+                      ),
                       const SizedBox(height: 16),
-                      Row(children: [Expanded(child: email), const SizedBox(width: 16), Expanded(child: phone)]),
+                      Row(
+                        children: [
+                          Expanded(child: email),
+                          const SizedBox(width: 16),
+                          Expanded(child: phone),
+                        ],
+                      ),
                     ],
                   );
                 },
@@ -166,7 +239,7 @@ class _ProfileDetails extends StatelessWidget {
               OutlinedButton(
                 onPressed: () => showDialog<void>(
                   context: context,
-                  barrierColor: Colors.black.withValues(alpha: 0.4),
+                  barrierColor: Colors.black54,
                   builder: (context) => const ChangePasswordDialog(),
                 ),
                 child: const Text('Змінити пароль'),
@@ -178,10 +251,16 @@ class _ProfileDetails extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: TextButton.icon(
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false),
+            onPressed: () => context.go('/login'),
             icon: const Icon(Icons.logout),
-            label: const Text('Вийти з облікового запису'),
-            style: TextButton.styleFrom(foregroundColor: AppColors.danger),
+            label: const Text(
+              'Вийти з облікового запису',
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.danger,
+              textStyle: const TextStyle(fontWeight: FontWeight.w700),
+            ),
           ),
         ),
       ],

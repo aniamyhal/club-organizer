@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/app_text_field.dart';
@@ -17,14 +18,23 @@ class RegisterScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const AuthHeading(title: 'Реєстрація', subtitle: 'Створіть обліковий запис організатора'),
+          const AuthHeading(
+            title: 'Реєстрація',
+            subtitle: 'Створіть обліковий запис організатора',
+          ),
           const SizedBox(height: 28),
           LayoutBuilder(
             builder: (context, constraints) {
               final firstName = const AppTextField(label: "Ім'я");
               final lastName = const AppTextField(label: 'Прізвище');
               return constraints.maxWidth < 360
-                  ? Column(children: [firstName, const SizedBox(height: 16), lastName])
+                  ? Column(
+                      children: [
+                        firstName,
+                        const SizedBox(height: 16),
+                        lastName,
+                      ],
+                    )
                   : Row(
                       children: [
                         Expanded(child: firstName),
@@ -35,7 +45,10 @@ class RegisterScreen extends StatelessWidget {
             },
           ),
           const SizedBox(height: 16),
-          const AppTextField(label: 'Електронна пошта', keyboardType: TextInputType.emailAddress),
+          const AppTextField(
+            label: 'Електронна пошта',
+            keyboardType: TextInputType.emailAddress,
+          ),
           const SizedBox(height: 16),
           const AppTextField(
             label: 'Пароль',
@@ -47,7 +60,7 @@ class RegisterScreen extends StatelessWidget {
           const SizedBox(height: 24),
           PrimaryButton(
             label: 'Зареєструватися',
-            onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
+            onPressed: () => context.go('/home'),
           ),
           const SizedBox(height: 16),
           Wrap(
@@ -56,9 +69,12 @@ class RegisterScreen extends StatelessWidget {
             children: [
               const Text('Вже є обліковий запис? '),
               TextButton(
-                onPressed: () => Navigator.pushReplacementNamed(context, '/login'),
+                onPressed: () => context.go('/login'),
                 style: TextButton.styleFrom(foregroundColor: AppColors.primary),
-                child: const Text('Увійти', style: TextStyle(fontWeight: FontWeight.w700)),
+                child: const Text(
+                  'Увійти',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
               ),
             ],
           ),

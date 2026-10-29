@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/widgets/app_text_field.dart';
 import '../../core/widgets/auth_background.dart';
@@ -20,7 +21,10 @@ class ForgotPasswordScreen extends StatelessWidget {
             subtitle: 'Введіть email, з яким ви реєструвалися. Ми надішлемо посилання для скидання пароля.',
           ),
           const SizedBox(height: 28),
-          const AppTextField(label: 'Електронна пошта', keyboardType: TextInputType.emailAddress),
+          const AppTextField(
+            label: 'Електронна пошта',
+            keyboardType: TextInputType.emailAddress,
+          ),
           const SizedBox(height: 20),
           PrimaryButton(
             label: 'Надіслати посилання',
@@ -30,7 +34,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           TextButton.icon(
-            onPressed: () => Navigator.pushReplacementNamed(context, '/login'),
+            onPressed: () => context.go('/login'),
             icon: const Icon(Icons.arrow_back),
             label: const Text('До входу'),
           ),
